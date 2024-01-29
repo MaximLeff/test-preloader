@@ -7,13 +7,66 @@
 </head>
 
 <style>
+	html {
+		font-family: sans-serif;
+	}
 	ul img {
 		max-width: 400px;
+	}
+	.loader-wrap {
+		border-radius: 5px;
+		border: 1px solid #eee;
+		margin-bottom: 20px;
+		padding: 10px;
+		max-width: 400px;
+	}
+	.preloader{ 
+		opacity: 1;
+		transition: 1s ease;
+	}
+	.preloader-progress {
+		--load: 0%;
+
+		height: 5px;
+		width: 100%;
+		background: hsl(190deg, 80%, 60%);
+		position: relative;
+		border-radius: 5px;
+		overflow: hidden;
+	}
+	.preloader-progress::after {
+		content: '';
+		position: absolute;
+		height: 100%;
+		left: 0;
+		width: var(--load);
+		background: hsl(190deg, 80%, 30%);
+		transition: .4s ease-in-out;
 	}
 </style>
 
 <body>
 	<h1>Test speed</h1>
+
+
+	<div class="loader-wrap">
+		<div class="span">Real</div>
+
+		<div class="preloader preloader-real">
+			<div class="preloader-num">0%</div>
+			<div class="preloader-progress"></div>
+		</div>
+	</div>
+
+	<div class="loader-wrap">
+		<span>Emulator</span>
+
+		<div class="preloader preloader-emu">
+			<div class="preloader-num">0%</div>
+			<div class="preloader-progress"></div>
+		</div>
+	</div>
+
 	<ul>
 		<li>
 			<img src="https://wallscloud.net/img/resize/5120/2880/MM/2023-05-01-mountain-landscape-1-58956.jpeg" alt="">
@@ -24,6 +77,16 @@
 		<li>
 			<img src="https://wallscloud.net/img/resize/7680/4320/MM/2023-05-16-cappadocia-turkey-1-59094.jpeg" alt="">
 		</li>
+
+		<li>
+			<iframe src="https://youtu.be/b048743zgL4?si=KhAWa9qhj3X6VnB3" frameborder="0"></iframe>
+		</li>
+
+		<li>
+			<video src="video.mp4"></video>
+		</li>
 	</ul>
+
+	<script src="script.js"></script>
 </body>
 </html>
