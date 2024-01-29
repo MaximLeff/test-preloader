@@ -10,16 +10,14 @@
 	html {
 		font-family: sans-serif;
 	}
+	body {
+		position: relative;
+		margin: 80px 0 0;
+	}
 	ul img {
 		max-width: 400px;
 	}
-	.loader-wrap {
-		border-radius: 5px;
-		border: 1px solid #eee;
-		margin-bottom: 20px;
-		padding: 10px;
-		max-width: 400px;
-	}
+	
 	.preloader{ 
 		opacity: 1;
 		transition: 1s ease;
@@ -43,27 +41,54 @@
 		background: hsl(190deg, 80%, 30%);
 		transition: .4s ease-in-out;
 	}
+
+	.fixed {
+		position: fixed;
+		display: flex;
+		gap: 20px;
+		width: 100%;
+		right: 0;
+		top: 0;
+	}
+
+	.loader-wrap {
+		border-radius: 5px;
+		border: 1px solid #eee;
+		margin-bottom: 20px;
+		padding: 10px;
+		width: 100%;
+		background: #fff;
+		max-width: 300px;
+	}
 </style>
 
 <body>
 	<h1>Test speed</h1>
 
 
-	<div class="loader-wrap">
-		<div class="span">Real</div>
+	<div class="fixed">
+		<div class="loader-wrap">
+			<div class="span">Real</div>
 
-		<div class="preloader preloader-real">
-			<div class="preloader-num">0%</div>
-			<div class="preloader-progress"></div>
+			<div class="preloader preloader-real">
+				<div class="preloader-num">0%</div>
+				<div class="preloader-progress"></div>
+			</div>
+
+			<div class="info">
+				<span class="info-1"></span>
+				<span> of </span>
+				<span class="info-2"></span>
+			</div>
 		</div>
-	</div>
 
-	<div class="loader-wrap">
-		<span>Emulator</span>
+		<div class="loader-wrap">
+			<span>Emulator</span>
 
-		<div class="preloader preloader-emu">
-			<div class="preloader-num">0%</div>
-			<div class="preloader-progress"></div>
+			<div class="preloader preloader-emu">
+				<div class="preloader-num">0%</div>
+				<div class="preloader-progress"></div>
+			</div>
 		</div>
 	</div>
 
@@ -78,12 +103,14 @@
 			<img src="https://wallscloud.net/img/resize/7680/4320/MM/2023-05-16-cappadocia-turkey-1-59094.jpeg" alt="">
 		</li>
 
-		<li>
+		<!-- <li>
 			<iframe src="https://youtu.be/b048743zgL4?si=KhAWa9qhj3X6VnB3" frameborder="0"></iframe>
-		</li>
+		</li> -->
 
 		<li>
-			<video src="video.mp4"></video>
+			<video>
+				<source src="video.mp4" type="">
+			</video>
 		</li>
 	</ul>
 

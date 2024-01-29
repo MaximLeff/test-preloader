@@ -8,12 +8,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let resourcesToLoad = [];
 
     let img = document.querySelectorAll('img')
-    // let video = document.querySelectorAll('source')
+    let video = document.querySelectorAll('source')
 
-    // video.forEach(el => {
-    //     // console.log(el.getAttribute('src'))
-    //     resourcesToLoad.push(el.getAttribute('src'))
-    // })
+    video.forEach(el => {
+        resourcesToLoad.push(el.getAttribute('src'))
+    })
 
     img.forEach(el => {
         resourcesToLoad.push(el.getAttribute('src'))
@@ -21,10 +20,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let loadedResources = 0;
 
+	//! temp
+	let info = document.querySelector('.info')
+	let info_1 = info.querySelector('.info-1')
+	let info_2 = info.querySelector('.info-2')
+
     function updateProgress() {
-        var percent = Math.round((loadedResources / resourcesToLoad.length) * 100);
+        let percent = Math.round((loadedResources / resourcesToLoad.length) * 100);
         loaderPercent.textContent = percent + '%';
 		loaderProgress.style = `--load: ${percent}%`
+		info_1.textContent = loadedResources
+		info_2.textContent = resourcesToLoad.length
+
     }
 
     // Загрузка ресурсов
@@ -43,8 +50,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function loadResource(resource, callback) {
         let extension = resource.split('.').pop().toLowerCase();
+		let video_formats = new RegExp('(mp4)|(webm)');
 
-        if (extension === 'mp4') {
+        if (video_formats.test(extension)) {
             let video = document.createElement('source');
             video.setAttribute('src', resource);
             video.setAttribute("type", "video/mp4");
@@ -66,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
             updateProgress();
             if (loadedResources === resourcesToLoad.length) {
             // Все ресурсы загружены, скрываем прелоадер и отображаем контент
-            // showContent();
 			setTimeout(() => {
 				loader.style.opacity = '0'
 				loader.addEventListener('transitionend', hide)
