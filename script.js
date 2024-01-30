@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let extension = resource.split('.').pop().toLowerCase();
 
 		let video_formats = new RegExp('(mp4)|(webm)');
-		let video_iframe = new RegExp('(https:\/\/youtu.be)');
+		let video_iframe = new RegExp('(https:\/\/www.youtube.com)');
 
         if (video_formats.test(extension) || video_formats.test(video_iframe)) {
             let video = document.createElement('source');
