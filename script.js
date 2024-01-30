@@ -9,14 +9,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let img = document.querySelectorAll('img')
     let video = document.querySelectorAll('source')
+    let videoIframe = document.querySelectorAll('iframe')
 
     video.forEach(el => {
+        resourcesToLoad.push(el.getAttribute('src'))
+    })
+
+    videoIframe.forEach(el => {
         resourcesToLoad.push(el.getAttribute('src'))
     })
 
     img.forEach(el => {
         resourcesToLoad.push(el.getAttribute('src'))
     })
+
+    console.log(resourcesToLoad)
 
     let loadedResources = 0;
 
@@ -34,38 +41,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    // Загрузка ресурсов
-    // resourcesToLoad.forEach(function (resource) {
-    //     var img = new Image();
-    //     img.src = resource;
-    //     img.onload = function () {
-    //         loadedResources++;
-    //         updateProgress();
-    //         if (loadedResources === resourcesToLoad.length) {
-    //         // Все ресурсы загружены, скрываем прелоадер и отображаем контент
-    //         //   showContent();
-    //         }
-    //     };
-    // });
-
     function loadResource(resource, callback) {
         let extension = resource.split('.').pop().toLowerCase();
-		let video_formats = new RegExp('(mp4)|(webm)');
 
-        if (video_formats.test(extension)) {
+		let video_formats = new RegExp('(mp4)|(webm)');
+		let video_iframe = new RegExp('(https:\/\/youtu.be)');
+
+        if (video_formats.test(extension) || video_formats.test(video_iframe)) {
             let video = document.createElement('source');
             video.setAttribute('src', resource);
             video.setAttribute("type", "video/mp4");
             video.addEventListener("progress", callback());
-        } else {
-            let img = new Image();
-            img.src = resource;
-            img.onload = callback;
-
-        // Handle other types of resources as needed
-            // console.warn('Unsupported resource type:', resource);
-            // callback();
-        }
+        } 
+        // else {
+        //     let img = new Image();
+        //     img.src = resource;
+        //     img.onload = callback;
+        // }
     }
 
     resourcesToLoad.forEach(function (resource) {
