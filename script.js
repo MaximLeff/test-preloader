@@ -1,63 +1,50 @@
 //! Real
 document.addEventListener('DOMContentLoaded', function () {
 
-	let loader = document.querySelector('.preloader-real');
-    let loaderPercent = loader.querySelector('.preloader-num');
-    let loaderProgress = loader.querySelector('.preloader-progress');
+	let loader = document.querySelector('.preloader-real')
+        loaderPercent = loader.querySelector('.preloader-num')
+        loaderProgress = loader.querySelector('.preloader-progress')
 
-    let resourcesToLoad = [];
+        resType = 'img, video, iframe'
+        resourcesToLoad = document.querySelectorAll(resType)
 
-    let img = document.querySelectorAll('img')
-    let video = document.querySelectorAll('source')
-    let videoIframe = document.querySelectorAll('iframe')
-
-    video.forEach(el => {
-        resourcesToLoad.push(el.getAttribute('src'))
-    })
-
-    videoIframe.forEach(el => {
-        resourcesToLoad.push(el.getAttribute('src'))
-    })
-
-    img.forEach(el => {
-        resourcesToLoad.push(el.getAttribute('src'))
-    })
-
-    console.log(resourcesToLoad)
-
-    let loadedResources = 0;
+        loadedResources = 0;
 
 	//! temp
 	let info = document.querySelector('.info')
 	let info_1 = info.querySelector('.info-1')
 	let info_2 = info.querySelector('.info-2')
+    // !temp
 
     function updateProgress() {
         let percent = Math.round((loadedResources / resourcesToLoad.length) * 100);
+
         loaderPercent.textContent = percent + '%';
 		loaderProgress.style = `--load: ${percent}%`
-		info_1.textContent = loadedResources
-		info_2.textContent = resourcesToLoad.length
 
+        // !temp
+        info_1.textContent = loadedResources
+		info_2.textContent = resourcesToLoad.length
+        // !temp
     }
 
     function loadResource(resource, callback) {
-        let extension = resource.split('.').pop().toLowerCase();
-
-		let video_formats = new RegExp('(mp4)|(webm)');
-		let video_iframe = new RegExp('(https:\/\/www.youtube.com)');
-
-        if (video_formats.test(extension) || video_formats.test(video_iframe)) {
-            let video = document.createElement('source');
-            video.setAttribute('src', resource);
-            video.setAttribute("type", "video/mp4");
-            video.addEventListener("progress", callback());
-        } 
-        // else {
-        //     let img = new Image();
-        //     img.src = resource;
-        //     img.onload = callback;
-        // }
+        if (resource.tagName == 'VIDEO') {
+            resource.onloadeddata = function() {
+                console.log('video load')
+                callback()
+            }
+        } else if (resource.tagName == 'IFRAME') {
+            resource.onload = function() {
+                console.log('iframe load')
+                callback()
+            }
+        } else {
+            resource.onload = function() {
+                console.log('img load')
+                callback()
+            }
+        }
     }
 
     resourcesToLoad.forEach(function (resource) {
